@@ -5,10 +5,18 @@ import express from "express";
 import sqlite3 from "sqlite3";
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+
 app.use(cors());
+
+// const cors = require('cors');
+// app.use(cors({
+//   origin: 'https://your-frontend-domain.com', // frontend URL after deployment
+//   credentials: true
+// }));
+
 
 // SQLite3 setup
 const db = new sqlite3.Database("./app.db", (err) => {
