@@ -17,7 +17,6 @@ app.use(cors());
 //   credentials: true
 // }));
 
-
 // SQLite3 setup
 const db = new sqlite3.Database("./app.db", (err) => {
   if (err) {
@@ -38,7 +37,7 @@ db.run(`
   )
 `);
 
-const CLIENT_ID = "480005944874-5c0523ra83a42ivf1gk62u43crak29rj.apps.googleusercontent.com";
+const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const client = new OAuth2Client(CLIENT_ID);
 
 async function verifyGoogleToken(token) {
@@ -178,23 +177,6 @@ app.post('/inboxemail', (req, res) => {
     return res.status(200).send({message: "DATA RETRIEVED", data: data, success: true});
   })
 })
-
-/*
-const inbox_table = `CREATE TABLE INBOX (
-    mailId INT AUTO_INCREMENT PRIMARY KEY,
-    sender TEXT NOT NULL,
-    receiver TEXT NOT NULL,
-    subject TEXT,
-    body TEXT,
-    mailType ENUM('Important', 'Spam', 'Market', 'Personal') NOT NULL
-  )`;
-*/
-
-
-
-
-
-
 
 app.listen(PORT, () => {
   console.log(`SERVER IS RUNNING AT http://localhost:${PORT}`);
